@@ -207,6 +207,9 @@ body {
   margin: 0 0 1.3em;
   padding: 0;
 }
+#chapter .placeholder.start-hint {
+  font-size: 1.143em;
+}
 #chapter.work-body.lang-zh p {
   margin: 0 0 1.3em;
   padding: 0;
@@ -884,7 +887,7 @@ html.reversi #pop.is-note.notice {
     padding-top: 0;
   }
   #main:has(#warning-gate:not([hidden])) #warning-gate .caution {
-    margin-top: 5px;
+    margin-top: 10px;
   }
 
   #main { position: static; }
