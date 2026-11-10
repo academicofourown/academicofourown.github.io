@@ -559,6 +559,26 @@ html.reversi #chapter_index select {
   font-size: 1em;
   vertical-align: baseline;
 }
+#end-body .hl-anno {
+  position: relative;
+  padding-bottom: 1.6em;
+}
+#end-body .hl-anno .anno-remove {
+  display: block;
+  position: absolute;
+  right: 0.15em;
+  bottom: 0.05em;
+  margin: 0;
+  padding: 0 0.15em;
+  line-height: 1;
+  font-size: 1.15em;
+}
+html.reversi #end-body .hl-anno .anno-remove {
+  color: #eee;
+}
+html.reversi #end-body .hl-anno .anno-remove:hover {
+  color: #fff;
+}
 
 .comment div.icon {
   margin-top: 0;
