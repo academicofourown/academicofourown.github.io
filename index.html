@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic of Our Own (beta)</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="vendor/ao3/01-core.css">
+<link rel="stylesheet" href="vendor/ao3/02-elements.css">
+<link rel="stylesheet" href="vendor/ao3/03-region-header.css">
+<link rel="stylesheet" href="vendor/ao3/05-region-main.css">
+<link rel="stylesheet" href="vendor/ao3/06-region-footer.css">
+<link rel="stylesheet" href="vendor/ao3/07-interactions.css">
+<link rel="stylesheet" href="vendor/ao3/08-actions.css">
+<link rel="stylesheet" href="vendor/ao3/09-roles-states.css">
+<link rel="stylesheet" href="vendor/ao3/10-types-groups.css">
+<link rel="stylesheet" href="vendor/ao3/12-group-meta.css">
+<link rel="stylesheet" href="vendor/ao3/13-group-blurb.css">
+<link rel="stylesheet" href="vendor/ao3/14-group-preface.css">
+<link rel="stylesheet" href="vendor/ao3/15-group-comments.css">
+<link rel="stylesheet" href="vendor/ao3/21-userstuff.css">
+<link rel="stylesheet" href="vendor/ao3/22-system-messages.css">
+<link rel="stylesheet" href="vendor/ao3/26-media-narrow.css" media="only screen and (max-width: 42em)">
+<link rel="stylesheet" href="vendor/ao3/28-media-print.css" media="print">
+<link id="skin-reversi" rel="stylesheet" href="vendor/ao3/reversi_site_screen_.css" disabled>
+<script>
+try {
+  var saved = JSON.parse(localStorage.getItem("aooo.v1") || "{}");
+  if (saved.reversi) {
+    document.documentElement.classList.add("reversi");
+    document.getElementById("skin-reversi").disabled = false;
+  }
+  if (saved.showLong === false) document.documentElement.classList.add("hide-long");
+} catch (e) {}
+</script>
+<link rel="stylesheet" href="css/local.css?v=12">
+</head>
+<body>
+<div id="outer">
+<header id="header" class="region">
+  <h1 class="heading"><a href="#main" id="home-link">Academic of Our Own</a></h1>
+  <div id="greeting">
+    <ul class="user navigation actions">
+      <li><button type="button" id="btn-post">Post New</button></li>
+      <li><button type="button" id="btn-bookmarks">My Bookmarks</button></li>
+      <li><button type="button" id="btn-reversi" aria-pressed="false">Reversi</button></li>
+      <li class="export-wrap">
+        <button type="button" id="btn-export" title="Export words saved today" aria-haspopup="true" aria-expanded="false">Export Vocab</button>
+        <div id="export-menu" hidden>
+          <button type="button" data-export="md">Markdown</button>
+          <button type="button" data-export="csv">CSV</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <nav aria-label="Works">
+    <ul class="primary navigation actions" id="works-links"></ul>
+  </nav>
+  <div class="clear"></div>
+</header>
+
+<div id="main" class="region">
+  <div class="work" id="work-page">
+    <h3 class="landmark heading">Actions</h3>
+    <ul class="work navigation actions">
+      <li id="owner-actions">
+        <button type="button" id="edit-work">Edit</button>
+        <button type="button" id="delete-work">Delete</button>
+        <button type="button" id="btn-entire">Entire Work</button>
+      </li>
+      <li class="chapter previous"><button type="button" data-nav="prev">&#8592; Previous Chapter</button></li>
+      <li class="chapter next"><button type="button" data-nav="next">Next Chapter &#8594;</button></li>
+    </ul>
+
+    <div class="wrapper">
+      <dl class="work meta group">
+        <dt class="warning tags">Archive Warnings:</dt>
+        <dd class="warning tags" id="meta-warning"></dd>
+        <dt class="fandom tags">Fandom:</dt>
+        <dd class="fandom tags" id="meta-fandom"></dd>
+        <dt class="freeform tags">Additional Tags:</dt>
+        <dd class="freeform tags" id="meta-tags"></dd>
+        <dt class="stats">Stats:</dt>
+        <dd class="stats">
+          <dl class="stats">
+            <dt class="language">Language:</dt><dd class="language" id="stat-language">English</dd>
+            <dt>Words:</dt><dd id="stat-words">0</dd>
+            <dt>Vocab:</dt><dd id="stat-vocab">0</dd>
+            <dt>Chapters:</dt><dd id="stat-chapters">0/0</dd>
+            <dt>Kudos:</dt><dd id="stat-kudos">0</dd>
+          </dl>
+        </dd>
+      </dl>
+    </div>
+
+    <div id="work-skin" class="wrapper">
+      <div id="workskin">
+        <div class="preface group">
+          <h2 class="title heading" id="work-title"></h2>
+          <h3 class="byline heading" id="byline"><span id="work-author"></span></h3>
+          <div class="summary module">
+            <h3 class="heading">Summary:</h3>
+            <blockquote class="userstuff" id="work-summary"></blockquote>
+          </div>
+        </div>
+
+        <div id="chapters" role="article">
+          <div class="chapter">
+            <div class="chapter preface group">
+              <h3 class="title" id="chapter-title"></h3>
+              <p class="jump" data-ch-pos></p>
+            </div>
+            <div class="userstuff module work-body" id="chapter" lang="en"></div>
+          </div>
+        </div>
+
+        <div class="afterword preface group">
+          <div id="end-notes" class="end notes module">
+            <h3 class="heading notes-head"><span>Notes:</span><button type="button" id="btn-gloss-hide" aria-pressed="false">自测模式：遮挡中文</button></h3>
+            <blockquote class="userstuff">
+              <p id="note-line" class="note-line" contenteditable="true" role="textbox" aria-label="激励语" spellcheck="false"></p>
+              <div id="end-body"></div>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="bookmarks-index" hidden>
+    <h2 class="heading" id="bookmarks-heading">Your Bookmarks (0)</h2>
+    <ul class="navigation actions" role="navigation">
+      <li><button type="button" id="bookmarks-to-works">Works</button></li>
+    </ul>
+    <h3 class="landmark heading">List of Bookmarks</h3>
+    <p id="bookmarks-empty" hidden>You have no bookmarks.</p>
+    <ol class="bookmark index group" id="bookmark-list"></ol>
+  </div>
+
+  <div id="bookmark-form-page" hidden>
+    <h2 class="heading" id="bookmark-form-heading">Editing bookmark</h2>
+    <ul class="navigation actions" role="navigation">
+      <li><button type="button" id="bookmark-form-show">Show</button></li>
+      <li><button type="button" id="bookmark-form-list">My Bookmarks</button></li>
+    </ul>
+    <div class="post bookmark" id="bookmark-form">
+      <h3 class="landmark heading">Bookmark</h3>
+      <form id="bookmark-edit-form">
+        <fieldset>
+          <legend>Bookmark</legend>
+          <h4 class="heading"><span class="byline" id="bookmark-pseud">you</span>, save a bookmark!</h4>
+          <fieldset>
+            <legend>Write Comments</legend>
+            <dl>
+              <dt><label for="bookmark-notes">Notes</label></dt>
+              <dd>
+                <p class="footnote" id="bookmark-notes-hint">The creator's summary is added automatically.</p>
+                <textarea id="bookmark-notes" rows="4" maxlength="5000" aria-describedby="bookmark-notes-hint"></textarea>
+              </dd>
+              <dt><label for="bookmark-tags">Your tags</label></dt>
+              <dd>
+                <p class="footnote" id="bookmark-tags-hint">The creator's tags are added automatically.</p>
+                <input id="bookmark-tags" type="text" autocomplete="off" aria-describedby="bookmark-tags-hint">
+                <p class="character_counter">Comma separated.</p>
+              </dd>
+            </dl>
+          </fieldset>
+          <fieldset>
+            <legend>Choose Type and Post</legend>
+            <p>
+              <input type="checkbox" id="bookmark-private"> <label for="bookmark-private">Private bookmark</label>
+              <input type="checkbox" id="bookmark-rec"> <label for="bookmark-rec">Rec</label>
+            </p>
+            <p class="submit actions">
+              <button type="submit" id="bookmark-submit">Update</button>
+            </p>
+          </fieldset>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <div id="feedback" class="feedback">
+    <h3 class="landmark heading">Actions</h3>
+    <ul class="actions">
+      <li><button type="button" id="btn-top">&#8593; Top</button></li>
+      <li><button type="button" data-nav="prev">&#8592; Previous Chapter</button></li>
+      <li><button type="button" data-nav="next">Next Chapter &#8594;</button></li>
+      <li><button type="button" id="kudos-btn">Kudos <span class="kudos-heart" aria-hidden="true">♥</span></button></li>
+      <li><button type="button" id="btn-bookmark">Bookmark</button></li>
+      <li><button type="button" id="btn-comments" aria-expanded="false" aria-controls="comments">Comments <span data-comment-count>(0)</span></button></li>
+    </ul>
+    <p class="kudos" id="kudos-note"></p>
+
+    <div id="comments" hidden>
+      <h3 class="heading" id="comments-title">Comments <span data-comment-count>(0)</span></h3>
+      <p class="comment-empty" id="comment-empty">No comments yet.</p>
+      <ol class="thread" id="comment-list"></ol>
+      <form class="comment-form post" id="comment-form">
+        <h4 class="heading" id="comment-form-title">Leave a comment</h4>
+        <p class="comment-banner" id="comment-banner" hidden></p>
+        <fieldset class="note-types">
+          <legend>笔记类型</legend>
+          <label><input type="radio" name="note-type" value="段落总结" checked> 段落总结</label>
+          <label><input type="radio" name="note-type" value="长难句翻译"> 长难句翻译</label>
+          <label><input type="radio" name="note-type" value="做题核对"> 做题核对</label>
+          <label><input type="radio" name="note-type" value="好句积累"> 好句积累</label>
+        </fieldset>
+        <label class="field" for="comment-body">Comment
+          <span class="hint">阅读笔记，或这一章的做题答案。提交后保存在这台浏览器里。</span>
+          <textarea id="comment-body" rows="6" maxlength="8000" placeholder="Write a note or an answer"></textarea>
+        </label>
+        <p class="submit actions">
+          <button type="submit" id="comment-submit">Comment</button>
+          <button type="button" id="comment-cancel" hidden>Cancel</button>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="footer" role="contentinfo" class="region">
+  <h3 class="landmark heading">Footer</h3>
+  <ul class="navigation actions">
+    <li class="module group">
+      <h4 class="heading">About</h4>
+      <ul class="menu">
+        <li>作者的xhs号：94301629100，欢迎关注或提供反馈建议</li>
+        <li>Academic of Our Own is an independent language-learning tool. It is not affiliated with, endorsed by, or connected to the Organization for Transformative Works or Archive of Our Own.</li>
+        <li>本工具为独立语言学习工具，与 OTW / AO3 官方无关。文章、书签、生词本、Kudos 和笔记只保存在这台浏览器的 localStorage 中，刷新不会丢失。</li>
+        <li>Work-page styles are adapted from <a href="https://github.com/otwcode/otwarchive">otwarchive</a> (GPL-2.0-or-later).</li>
+        <li class="visit-count">
+          <span id="busuanzi_container_site_uv">Visitors <span id="busuanzi_value_site_uv"></span></span>
+          <span id="busuanzi_container_site_pv">Views <span id="busuanzi_value_site_pv"></span></span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+</div>
+
+<div id="library-panel" class="library-panel" hidden>
+  <div class="library-card" role="dialog" aria-labelledby="library-title">
+    <div class="library-bar">
+      <h2 id="library-title">My Bookmarks</h2>
+      <button type="button" id="library-close" aria-label="Close">×</button>
+    </div>
+    <div class="library-tabs" role="tablist">
+      <button type="button" id="tab-works" role="tab" aria-selected="true">我的文献库</button>
+      <button type="button" id="tab-vocab" role="tab" aria-selected="false" aria-controls="library-vocab">全局生词本汇总</button>
+    </div>
+    <div id="library-vocab" role="tabpanel" hidden></div>
+  </div>
+</div>
+
+<div id="overlay" class="overlay" hidden>
+  <form class="sheet" id="work-form" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <h2 id="sheet-title">Post New Paper</h2>
+    <p class="hint">把阅读材料排成一篇作品。文本存在这台浏览器里。</p>
+
+    <label class="field" for="f-file">Upload a document
+      <input id="f-file" type="file" accept=".pdf,.doc,.docx,.docm,.dot,.dotx,.wps,.wpt,.rtf,.odt,.epub,.html,.htm,.xhtml,.txt,.text,.md,.markdown,.csv,.tsv,.log,.rst,text/plain,text/html,application/pdf">
+    </label>
+    <p class="hint" id="f-file-note"></p>
+
+    <label class="field" for="f-title">Title
+      <input id="f-title" type="text" autocomplete="off" placeholder="Work title">
+    </label>
+    <details class="advanced" id="f-advanced">
+      <summary>高级设置（选填，留空则根据文章自动生成）</summary>
+      <label class="field" for="f-fandom">Fandom
+        <span class="hint">科目或来源，例如 IELTS、CET-6、IEEE。</span>
+        <input id="f-fandom" type="text" list="fandom-list" autocomplete="off" placeholder="留空则为 Original Work">
+      </label>
+      <datalist id="fandom-list">
+        <option value="IELTS"></option>
+        <option value="CET-6"></option>
+        <option value="CET-4"></option>
+        <option value="TOEFL"></option>
+        <option value="GRE"></option>
+        <option value="IEEE"></option>
+        <option value="Nature"></option>
+        <option value="arXiv"></option>
+        <option value="Course Reading"></option>
+      </datalist>
+      <fieldset>
+        <legend>Archive Warnings</legend>
+        <label><input type="checkbox" name="warn" value="No Content Warnings"> No Content Warnings</label>
+        <label><input type="checkbox" name="warn" value="Graphic Depictions of Long Sentences"> Graphic Depictions of Long Sentences</label>
+        <label><input type="checkbox" name="warn" value="Dense Terminology"> Dense Terminology</label>
+        <label><input type="checkbox" name="warn" value="Major Brain Cell Death"> Major Brain Cell Death</label>
+      </fieldset>
+      <label class="field" for="f-tags">Additional Tags
+        <span class="hint">留空则从正文识别文章类型、主题词和核心词。手写时用逗号分开。</span>
+        <input id="f-tags" type="text" autocomplete="off" placeholder="留空即可">
+      </label>
+      <label class="field" for="f-summary">Summary
+        <span class="hint">留空则截取第一章正文的前 120 个字。</span>
+        <textarea id="f-summary" rows="3"></textarea>
+      </label>
+    </details>
+    <label class="field" for="f-body">Paper text
+      <span class="hint">可粘贴雅思、六级或论文正文。用单独一行写 Chapter 1、Abstract、Introduction，会拆成章节。</span>
+      <textarea id="f-body" class="passage" spellcheck="true"></textarea>
+    </label>
+    <p class="hint" id="f-count"></p>
+    <p class="form-error" id="f-error" role="alert"></p>
+    <div class="form-actions">
+      <button type="submit" class="primary" id="f-submit">Post</button>
+      <button type="button" class="ghost" id="f-cancel">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<div id="fn-pop" class="fn-pop" hidden>
+  <p id="fn-pop-body"></p>
+  <button type="button" id="fn-pop-all">查看全部</button>
+</div>
+
+<div id="pop" class="pop" hidden role="dialog" aria-label="Lookup">
+  <div class="pop-head">
+    <div class="pop-term">
+      <span id="pop-word" class="pop-word"></span>
+      <span id="pop-lemma" class="pop-lemma" hidden></span>
+      <button type="button" id="pop-ipa" class="pop-ipa" hidden></button>
+      <button type="button" id="pop-speak" class="pop-speak" aria-label="朗读">🔊</button>
+    </div>
+    <button type="button" id="pop-save" class="pop-save">+ Bookmark</button>
+  </div>
+  <div class="pop-core">
+    <div id="pop-gloss" class="pop-gloss" contenteditable="true" lang="zh-Hans" spellcheck="false" role="textbox" aria-label="中文释义"></div>
+    <p id="pop-def" class="pop-def"></p>
+  </div>
+  <div id="pop-more" class="pop-more" hidden>
+    <p id="pop-syn" class="pop-extra" hidden></p>
+    <p id="pop-deriv" class="pop-extra" hidden></p>
+  </div>
+  <button type="button" id="pop-quote" class="pop-quote" hidden>Quote to Comment</button>
+  <div id="pop-note" class="pop-note" hidden>
+    <p id="pop-note-quote" class="pop-note-quote"></p>
+    <label class="pop-note-label" for="pop-note-body">批注</label>
+    <textarea id="pop-note-body" rows="3" maxlength="2000" placeholder="随意吐槽吧"></textarea>
+    <button type="button" id="pop-highlight" class="pop-save">+ Highlight &amp; Note</button>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden role="status"></div>
+<noscript><p class="noscript">Academic of Our Own needs JavaScript to set a paper in this skin.</p></noscript>
+
+<script src="vendor/pdf.min.js"></script>
+<p id="boot" hidden></p>
+<script src="js/boot.js?v=protect1"></script>
+<script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

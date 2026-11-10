@@ -1,0 +1,11 @@
+The stylesheets in this folder, the Reversi skin, images/skins/textures/tiles/red-ao3.png,
+images/imageset.png, and icons/*.png from public/images/skins/iconsets/default are taken from otwarchive:
+
+https://github.com/otwcode/otwarchive
+
+Copyright Organization for Transformative Works.
+Licensed under the GNU General Public License, version 2 or later. See LICENSE.
+
+Academic of Our Own is an independent language-learning tool. It is not Archive of Our Own
+and is not affiliated with the Organization for Transformative Works. The AO3 name and logo
+are not used.
