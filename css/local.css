@@ -874,6 +874,19 @@ html.reversi #pop.is-note.notice {
     text-overflow: clip;
   }
 
+  #warning-gate {
+    font-size: 1em;
+  }
+  #header:has(+ #main #warning-gate:not([hidden])) {
+    margin-bottom: 0;
+  }
+  #main:has(#warning-gate:not([hidden])) {
+    padding-top: 0;
+  }
+  #main:has(#warning-gate:not([hidden])) #warning-gate .caution {
+    margin-top: 5px;
+  }
+
   #main { position: static; }
 
   dl.meta dt,
