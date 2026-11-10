@@ -33,7 +33,7 @@ try {
   if (saved.showLong === false) document.documentElement.classList.add("hide-long");
 } catch (e) {}
 </script>
-<link rel="stylesheet" href="css/local.css?v=21">
+<link rel="stylesheet" href="css/local.css?v=24">
 </head>
 <body>
 <div id="outer">
@@ -78,6 +78,17 @@ try {
       </li>
       <li class="chapter previous"><button type="button" data-nav="prev">&#8592; Previous Chapter</button></li>
       <li class="chapter next"><button type="button" data-nav="next">Next Chapter &#8594;</button></li>
+      <li class="chapter" id="chapter-picker" hidden>
+        <button type="button" id="btn-chapter-index" aria-expanded="false" aria-controls="chapter_index">Chapter Index</button>
+        <ul id="chapter_index" class="expandable secondary">
+          <li>
+            <p>
+              <select id="chapter-select" name="selected_id"></select>
+              <span class="submit actions"><button type="button" id="chapter-go">Go</button></span>
+            </p>
+          </li>
+        </ul>
+      </li>
     </ul>
 
     <div class="wrapper">
@@ -358,7 +369,7 @@ try {
 
 <script src="vendor/pdf.min.js"></script>
 <p id="boot" hidden></p>
-<script src="js/boot.js?v=protect2"></script>
+<script src="js/boot.js?v=protect3"></script>
 <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>

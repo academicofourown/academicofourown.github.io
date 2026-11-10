@@ -545,13 +545,6 @@ html.reversi .word.saved { background: #5a4a16; color: #fff6d0; }
 html.reversi .userstuff .word.saved:hover { background: #6d5a1c; }
 
 .long-sentence {
-  border-left: 2px solid var(--gold);
-  padding-left: 0.45em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-}
-
-html.hide-long .long-sentence {
   border-left: 0;
   padding-left: 0;
 }

@@ -311,10 +311,9 @@ html.reversi #workskin .word.saved:hover {
 }
 
 .long-sentence {
-  border-left: 2px solid #a56b00;
-  padding-left: 0.45em;
+  border-left: 0;
+  padding-left: 0;
 }
-html.hide-long .long-sentence { border-left: 0; padding-left: 0; }
 
 #end-notes > .heading.notes-head {
   display: flex;
@@ -474,7 +473,7 @@ html.reversi #end-body .pop-extra {
 }
 .unlink:hover { color: #900; background: none; box-shadow: none; border: 0; }
 #warning-gate {
-  width: 60%;
+  width: auto;
   font-size: 1.143em;
 }
 #warning-gate .caution {
@@ -494,6 +493,55 @@ html.reversi #end-body .pop-extra {
   margin: 0.643em 0 1.286em;
   padding: 0;
   text-align: right;
+}
+#chapter-picker {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+#chapter_index.secondary {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 2.411em;
+  z-index: 54;
+  width: max-content;
+  max-width: min(24em, 80vw);
+  margin: 0;
+  padding: 0.5em 0.643em;
+  background: #fff;
+  border: 2px solid #bbb;
+  border-radius: 0.15em;
+  box-shadow: 2px 2px 5px #bbb;
+}
+#btn-chapter-index.expanded + #chapter_index {
+  display: block;
+}
+#chapter_index p {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  margin: 0;
+  padding: 0;
+}
+#chapter_index select {
+  max-width: 16em;
+  font: inherit;
+}
+#chapter_index .actions {
+  float: none;
+  padding: 0;
+}
+html.reversi #chapter_index.secondary {
+  background: #333;
+  color: #eee;
+  border-color: #666;
+  box-shadow: 2px 2px 5px #111;
+}
+html.reversi #chapter_index select {
+  background: #222;
+  color: #eee;
+  border-color: #666;
 }
 
 #end-body .unlink {
