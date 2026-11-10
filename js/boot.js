@@ -9,7 +9,7 @@
     }
   };
   const boot = async () => {
-    const res = await fetch("app.dat?v=protect1");
+    const res = await fetch("app.dat?v=protect2");
     if (!res.ok) throw new Error("payload " + res.status);
     const bytes = new Uint8Array(await res.arrayBuffer());
     const k = a;

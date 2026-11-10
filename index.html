@@ -33,7 +33,7 @@ try {
   if (saved.showLong === false) document.documentElement.classList.add("hide-long");
 } catch (e) {}
 </script>
-<link rel="stylesheet" href="css/local.css?v=12">
+<link rel="stylesheet" href="css/local.css?v=21">
 </head>
 <body>
 <div id="outer">
@@ -43,7 +43,7 @@ try {
     <ul class="user navigation actions">
       <li><button type="button" id="btn-post">Post New</button></li>
       <li><button type="button" id="btn-bookmarks">My Bookmarks</button></li>
-      <li><button type="button" id="btn-reversi" aria-pressed="false">Reversi</button></li>
+      <li><button type="button" id="btn-reversi" aria-pressed="false">暗色模式</button></li>
       <li class="export-wrap">
         <button type="button" id="btn-export" title="Export words saved today" aria-haspopup="true" aria-expanded="false">Export Vocab</button>
         <div id="export-menu" hidden>
@@ -61,6 +61,14 @@ try {
 
 <div id="main" class="region">
   <div class="work" id="work-page">
+    <div id="warning-gate" hidden>
+      <p class="caution notice">This work could have high-density academic content, complex syntax, or intense literary angst. If you proceed you have agreed that you are willing to see such content</p>
+      <ul class="actions">
+        <li><button type="button" id="gate-continue">Yes, Continue</button></li>
+        <li><button type="button" id="gate-back">No, Go Back</button></li>
+      </ul>
+    </div>
+    <div id="work-view">
     <h3 class="landmark heading">Actions</h3>
     <ul class="work navigation actions">
       <li id="owner-actions">
@@ -124,6 +132,7 @@ try {
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 
@@ -349,7 +358,7 @@ try {
 
 <script src="vendor/pdf.min.js"></script>
 <p id="boot" hidden></p>
-<script src="js/boot.js?v=protect1"></script>
+<script src="js/boot.js?v=protect2"></script>
 <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>

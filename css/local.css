@@ -473,17 +473,36 @@ html.reversi #end-body .pop-extra {
   cursor: pointer;
 }
 .unlink:hover { color: #900; background: none; box-shadow: none; border: 0; }
-#end-body .vocab-card {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.4em;
+#warning-gate {
+  width: 60%;
+  font-size: 1.143em;
 }
-#end-body .vocab-main { flex: 1; min-width: 0; }
-#end-body .vocab-card > .unlink {
-  flex: none;
-  line-height: 1.5;
-  font-size: 14px;
+#warning-gate .caution {
+  display: block;
+  overflow: auto;
+  margin-left: 0;
+  margin-right: 0;
+  background: #ffe34e;
+  color: #000;
+  border-color: #d89e36;
+}
+#warning-gate .actions {
+  clear: both;
+  float: none;
+  display: block;
+  width: 100%;
+  margin: 0.643em 0 1.286em;
   padding: 0;
+  text-align: right;
+}
+
+#end-body .unlink {
+  display: inline;
+  margin: 0 0 0 5px;
+  padding: 0;
+  line-height: inherit;
+  font-size: 1em;
+  vertical-align: baseline;
 }
 
 .comment div.icon {
