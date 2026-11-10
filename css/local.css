@@ -292,8 +292,12 @@ body {
   margin: 0 0 8px;
   padding: 0.35em 0.45em;
   font: inherit;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.45;
+  min-height: 4.5em;
+  touch-action: manipulation;
+  -webkit-user-select: text;
+  user-select: text;
 }
 #pop #pop-note-body::placeholder { color: #999; }
 #pop #pop-highlight { display: inline-block; }
@@ -776,12 +780,15 @@ html.reversi #pop.is-note.notice {
   min-height: 1.35em;
   outline: none;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #222;
   white-space: pre-wrap;
   word-break: break-word;
   width: auto;
+  touch-action: manipulation;
+  -webkit-user-select: text;
+  user-select: text;
 }
 #pop .pop-gloss:empty::before { content: "…"; color: #999; }
 #pop .pop-sense { margin: 0; font-size: 14px; line-height: 1.5; color: #222; }
